@@ -57,24 +57,15 @@ router.get('/api/categories', async (ctx, next) => {
     return fortune(ctx, categories);
 });
 
-// router.get('/api/categories/:id', async (ctx, next) => {
-//     const id = Number(ctx.params.id);
-
-//     const category = id === 0 ? items : items.filter((item) => item.category === id)
-
-//     return fortune(ctx, category);
-// });
-
-router.get('/api/categories/:id', async (ctx, next) => {
-    const id = Number(ctx.params.id);
+router.get('/api/category', async (ctx, next) => {
     const { query } = ctx.request;
 
     const page = query.page === undefined ? 1 : Number(query.page);
     const limit = query.limit === undefined ? 10 : Number(query.limit);
-
+    const id = Number(query.categoryId)
     const category = id === 0 ? items : items.filter((item) => item.category === id);
 
-    const endIndex = page * limit + limit;
+    const endIndex = page * limit;
 
     const paginatedItems = category.slice(0, endIndex).map(itemBasicMapper);
 

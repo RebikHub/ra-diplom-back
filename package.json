@@ -7,7 +7,7 @@
     "prestart": "npm install",
     "start": "forever server.js",
     "watch": "forever -w server.js",
-    "node": "nodemon server.js"
+    "server": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",

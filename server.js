@@ -74,10 +74,9 @@ router.get('/api/categories/:id', async (ctx, next) => {
 
     const category = id === 0 ? items : items.filter((item) => item.category === id);
 
-    const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit;
+    const endIndex = page * limit + limit;
 
-    const paginatedItems = category.slice(startIndex, endIndex).map(itemBasicMapper);
+    const paginatedItems = category.slice(0, endIndex).map(itemBasicMapper);
 
     return fortune(ctx, paginatedItems);
 });

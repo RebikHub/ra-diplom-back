@@ -1,6 +1,6 @@
-import { createServer } from 'http';
-import { parse } from 'url';
-import handleRequest from './handlers/requestHandler.js';
+const { createServer } = require('http');
+const { parse } = require('url');
+const { handleRequest } = require('./handlers/handleRequest.js');
 
 const server = createServer((request, response) => {
   const { pathname, query } = parse(request.url, true);

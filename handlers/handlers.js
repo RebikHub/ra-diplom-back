@@ -133,5 +133,5 @@ function handleOrder(method, query, request, response) {
 }
 
 module.exports = {
-  handleTopSales, handleCategories, handleCategory, handleItems, handleSingleItem, handleOrder
+  handleError, handleTopSales, handleCategories, handleCategory, handleItems, handleSingleItem, handleOrder
 }

@@ -6,7 +6,7 @@ const handlers = {
   '/api/categories': handleCategories,
   '/api/category': handleCategory,
   '/api/items': handleItems,
-  '/api/items/:id': handleSingleItem,
+  '/api/item': handleSingleItem,
   '/api/order': handleOrder,
 };
 

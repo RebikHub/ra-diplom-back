@@ -1,4 +1,4 @@
-const { fortune } = require('../utils/utils.js');
+const { fortune, parseRequestBody } = require('../utils/utils.js');
 const { handleTopSales, handleCategories, handleCategory, handleItems, handleSingleItem, handleOrder, handleError } = require('./handlers.js');
 
 const handlers = {

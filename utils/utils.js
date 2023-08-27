@@ -30,18 +30,34 @@ function fortune(response, body = null, status = 200) {
   });
 }
 
-// async function fortune(response, body = null, status = 200) {
-//   return await fort(response, body = null, status = 200)
-//     .then((res) => {
-//       return res
-//     })
-//     .catch((error) => {
-//       response.writeHead(500, { 'Content-Type': 'application/json' });
-//       response.end(JSON.stringify({ error: 'Internal Server Error' }));
-//     });
-// }
+async function parseRequestBody(request) {
+  return new Promise((resolve, reject) => {
+    let requestData = null;
+    let requestBody = '';
+
+    request.on('data', chunk => {
+      requestBody += chunk.toString();
+    });
+
+    request.on('end', () => {
+      try {
+        requestData = JSON.parse(requestBody);
+        resolve(requestData);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  });
+}
+
+function handleError(response, statusCode = 500) {
+  response.writeHead(statusCode, { 'Content-Type': 'application/json' });
+  response.end(JSON.stringify({ error: 'Internal Server Error' }));
+}
 
 module.exports = {
+  handleError,
+  parseRequestBody,
   itemBasicMapper,
   randomNumber,
   fortune

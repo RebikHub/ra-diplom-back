@@ -4,7 +4,6 @@ const { handleRequest } = require('./handlers/handleRequest.js');
 
 const server = createServer((request, response) => {
   const { pathname, query } = parse(request.url, true);
-  console.log(parse(request.url, true));
   handleRequest(request.method, pathname, query, request, response);
 });
 

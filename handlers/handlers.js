@@ -1,14 +1,9 @@
-const { fortune, itemBasicMapper } = require('../utils/utils.js');
+const { fortune, itemBasicMapper, parseRequestBody, handleError } = require('../utils/utils.js');
 const { readFileSync } = require('fs');
 
 const categories = JSON.parse(readFileSync('./data/categories.json', 'utf-8'));
 const items = JSON.parse(readFileSync('./data/products.json', 'utf-8'));
 const topSaleIds = [66, 65, 73];
-
-function handleError(response, statusCode = 500) {
-  response.writeHead(statusCode, { 'Content-Type': 'application/json' });
-  response.end(JSON.stringify({ error: 'Internal Server Error' }));
-}
 
 function handleTopSales(method, query, request, response) {
   if (method === 'GET') {
@@ -93,9 +88,12 @@ function handleSingleItem(method, query, request, response) {
   }
 }
 
-function handleOrder(method, query, request, response) {
-  if (method === 'POST') {
-    const requestBody = JSON.parse(request.body);
+async function handleOrder(method, query, request, response) {
+  const requestBody = await parseRequestBody(request).catch((error) => {
+    handleError(response);
+  })
+
+  if (method === 'POST' && requestBody) {
     const { owner: { phone, address }, items } = requestBody;
     if (typeof phone !== 'string') {
       fortune(response, 'Bad Request: Phone', 400).catch((error) => {
@@ -121,7 +119,7 @@ function handleOrder(method, query, request, response) {
         handleError(response);
       });
     } else {
-      fortune(response, null, 204).catch((error) => {
+      fortune(response, 'Order succeed!').catch((error) => {
         handleError(response);
       });
     }
